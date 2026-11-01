@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Phishing Email Detection</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Phishing Email Detection</h1>
+
+        <p class="subtitle">
+            Analyze your email and identify suspicious activities.
+        </p>
+
+        <form method="POST">
+
+            <label for="sender">Sender Email Address</label>
+            <input
+                type="text"
+                id="sender"
+                name="sender"
+                placeholder="example@gmail.com"
+                required
+            >
+
+            <label for="subject">Email Subject</label>
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Enter email subject"
+                required
+            >
+
+            <label for="message">Email Message</label>
+            <textarea
+                id="message"
+                name="message"
+                rows="7"
+                placeholder="Paste your email message here..."
+                required
+            ></textarea>
+
+            <button type="submit">Analyze Email</button>
+
+        </form>
+
+        {% if result %}
+
+        <div class="result">
+
+            <h2>Analysis Result</h2>
+
+            <h3>Risk Level: {{ result.risk_level }}</h3>
+
+            <p>Risk Score: {{ result.risk_score }}</p>
+
+            <h3>Detection Details:</h3>
+
+            {% if result.reasons %}
+
+                <ul>
+                    {% for reason in result.reasons %}
+                        <li>{{ reason }}</li>
+                    {% endfor %}
+                </ul>
+
+            {% else %}
+
+                <p>No suspicious signs were detected by these checks.</p>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
